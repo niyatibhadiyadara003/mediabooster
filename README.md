@@ -9,12 +9,11 @@ A new Media Booster project.
 ## GIF
 
 
-![mediabooster1](https://user-images.githubusercontent.com/102577515/170225263-23d71ebf-4740-4ec0-8550-92e0466aa55d.gif)
+<img src = 'https://user-images.githubusercontent.com/102577515/170225263-23d71ebf-4740-4ec0-8550-92e0466aa55d.gif' width=200/>
 
-![mediabooster2](https://user-images.githubusercontent.com/102577515/170225360-57534221-91dd-486e-9e14-c50693cd226b.gif)
+<img src ='https://user-images.githubusercontent.com/102577515/170225360-57534221-91dd-486e-9e14-c50693cd226b.gif' width=200/>
 
-![mediabooster3](https://user-images.githubusercontent.com/102577515/170225610-eaf856e2-40df-4ffa-9db7-7f0b01f14e9f.gif)
-
+<img src ='https://user-images.githubusercontent.com/102577515/170225610-eaf856e2-40df-4ffa-9db7-7f0b01f14e9f.gif' width=200/>
 
 
 ## Getting Started
