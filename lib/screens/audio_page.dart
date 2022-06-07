@@ -69,7 +69,6 @@ class AudioPage extends StatefulWidget {
 }
 
 class _AudioPageState extends State<AudioPage> {
-
   late String index;
 
   @override
@@ -84,19 +83,19 @@ class _AudioPageState extends State<AudioPage> {
       ),
       body: ListView.builder(
           itemCount: audioPlay.length,
-          itemBuilder: (context,i){
-
+          itemBuilder: (context, i) {
             index = audioPlay[i];
 
             return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0,vertical: 5),
+              padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 5),
               child: InkWell(
-                onTap: (){
+                onTap: () {
                   myAudioPlayer.open(
                     Audio(audioPlay[i]),
                     autoStart: false,
                   );
-                  Navigator.of(context).pushNamed('audioplayscreen',arguments: i);
+                  Navigator.of(context)
+                      .pushNamed('audioplayscreen', arguments: i);
                 },
                 child: Container(
                   height: 100,
@@ -104,11 +103,12 @@ class _AudioPageState extends State<AudioPage> {
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
                       color: myColors[i],
-                      borderRadius: BorderRadius.circular(10)
-                  ),
+                      borderRadius: BorderRadius.circular(10)),
                   child: Row(
                     children: [
-                      SizedBox(width: 20,),
+                      SizedBox(
+                        width: 20,
+                      ),
                       Container(
                         height: 50,
                         width: 50,
@@ -117,27 +117,38 @@ class _AudioPageState extends State<AudioPage> {
                             image: DecorationImage(
                               image: NetworkImage(audioImage[i]),
                               fit: BoxFit.cover,
-                            )
-                        ),
+                            )),
                       ),
-                      SizedBox(width: 20,),
+                      SizedBox(
+                        width: 20,
+                      ),
                       Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text("${audioName[i]}",style: TextStyle(
-                              fontSize: 18,
+                          Text(
+                            "${audioName[i]}",
+                            style: TextStyle(
+                                fontSize: 18,
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          Text(
+                            "${audioArtist[i]}",
+                            style: TextStyle(
                               color: Colors.white,
-                              fontWeight: FontWeight.bold
-                          ),),
-                          Text("${audioArtist[i]}",style: TextStyle(
-                            color: Colors.white,
-                          ),),
+                            ),
+                          ),
                         ],
                       ),
                       Spacer(),
-                      Icon(Icons.play_arrow,color: Colors.white,),
-                      SizedBox(width: 20,)
+                      Icon(
+                        Icons.play_arrow,
+                        color: Colors.white,
+                      ),
+                      SizedBox(
+                        width: 20,
+                      )
                     ],
                   ),
                 ),
@@ -148,8 +159,6 @@ class _AudioPageState extends State<AudioPage> {
   }
 }
 
-
-
 class AudioPlayerScreen extends StatefulWidget {
   const AudioPlayerScreen({Key? key}) : super(key: key);
 
@@ -159,7 +168,7 @@ class AudioPlayerScreen extends StatefulWidget {
 
 class _AudioPlayerScreenState extends State<AudioPlayerScreen> {
   IconData playPauseIcon = Icons.play_arrow;
-  IconData volumeIcon =  Icons.headset;
+  IconData volumeIcon = Icons.headset;
   int i = 0;
 
   String? totalDuration;
@@ -172,9 +181,10 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen> {
 
   @override
   void initState() {
-    myAudioPlayer.current.listen((event){
-      setState((){
-        totalDuration = event!.audio.duration.toString().split(".")[0].toString();
+    myAudioPlayer.current.listen((event) {
+      setState(() {
+        totalDuration =
+            event!.audio.duration.toString().split(".")[0].toString();
         totalDurationInSeconds = event.audio.duration.inSeconds.toDouble();
         print(".........$totalDurationInSeconds");
       });
@@ -194,9 +204,10 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen> {
     dynamic args = ModalRoute.of(context)!.settings.arguments;
 
     return Scaffold(
-      appBar: AppBar(title: Text("Audio Player"),
-      centerTitle: true,
-      backgroundColor: Colors.cyan,
+      appBar: AppBar(
+        title: Text("Audio Player"),
+        centerTitle: true,
+        backgroundColor: Colors.cyan,
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -239,15 +250,17 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen> {
                     const SizedBox(
                       height: 30,
                     ),
-                    Text("${audioName[args]}",style: TextStyle(
-                      color: Colors.white,
-                    )),
+                    Text("${audioName[args]}",
+                        style: TextStyle(
+                          color: Colors.white,
+                        )),
                     const SizedBox(
                       height: 10,
                     ),
-                    Text("${audioArtist[args]}",style: TextStyle(
-                        color: Colors.white,
-                    )),
+                    Text("${audioArtist[args]}",
+                        style: TextStyle(
+                          color: Colors.white,
+                        )),
                     const SizedBox(
                       height: 20,
                     ),
@@ -284,7 +297,10 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen> {
                                 ? myAudioPlayer.pause()
                                 : myAudioPlayer.play();
                           },
-                          icon: Icon((myAudioPlayer.isPlaying==true)?Icons.play_arrow:Icons.pause,
+                          icon: Icon(
+                            (myAudioPlayer.isPlaying == true)
+                                ? Icons.play_arrow
+                                : Icons.pause,
                             color: Colors.white,
                             size: 70,
                           ),
@@ -292,13 +308,11 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen> {
                         const SizedBox(width: 0.05),
                         IconButton(
                           onPressed: () {
-                            if(myAudioPlayer.volume.value != 0){
+                            if (myAudioPlayer.volume.value != 0) {
                               myAudioPlayer.setVolume(0);
                               volumeIcon = Icons.headset_off;
-                              setState(() {
-                              });
-                            }
-                            else if(myAudioPlayer.volume.value == 0){
+                              setState(() {});
+                            } else if (myAudioPlayer.volume.value == 0) {
                               myAudioPlayer.setVolume(1);
                               volumeIcon = Icons.headset;
                               setState(() {});
@@ -315,7 +329,9 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen> {
                         ),
                       ],
                     ),
-                    const SizedBox(height: 30,),
+                    const SizedBox(
+                      height: 30,
+                    ),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 12),
                       child: Slider(
@@ -355,9 +371,6 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen> {
     );
   }
 }
-
-
-
 
 /*
 class AudioPage extends StatefulWidget {

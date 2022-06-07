@@ -1,8 +1,8 @@
+import 'package:carousel_indicator/carousel_indicator.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:transparent_image/transparent_image.dart';
-
 
 class StaggeredPage extends StatefulWidget {
   @override
@@ -44,7 +44,7 @@ class _StaggeredPageState extends State<StaggeredPage> {
               return InkWell(
                 onTap: () {
                   Route route =
-                  MaterialPageRoute(builder: (context) => SliderPage());
+                      MaterialPageRoute(builder: (context) => SliderPage());
                   Navigator.of(context).push(route);
                 },
                 child: Container(
@@ -70,10 +70,6 @@ class _StaggeredPageState extends State<StaggeredPage> {
   }
 }
 
-
-
-
-
 class SliderPage extends StatefulWidget {
   const SliderPage({Key? key}) : super(key: key);
 
@@ -95,6 +91,8 @@ class _SliderPageState extends State<SliderPage> {
     'https://cdn.pixabay.com/photo/2020/12/13/16/22/snow-5828736_960_720.jpg',
     'https://cdn.pixabay.com/photo/2020/12/09/09/27/women-5816861_960_720.jpg',
   ];
+  CarouselController controller = CarouselController();
+  int pageindex = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -104,30 +102,43 @@ class _SliderPageState extends State<SliderPage> {
         centerTitle: true,
         backgroundColor: Colors.cyan,
       ),
-      body: Center(
-        child: CarouselSlider(
-            items: items
-                .map((e) {
+      body: Column(
+        children: [
+          CarouselSlider(
+            items: items.map((e) {
               return Container(
                 decoration: BoxDecoration(
                     image: DecorationImage(
-                      image: NetworkImage(e),
-                    )),
-              );})
-                .toList(),
-
+                  image: NetworkImage(e),
+                )),
+              );
+            }).toList(),
+            carouselController: controller,
             options: CarouselOptions(
+              onPageChanged: (val, carouselslide) {
+                setState(() {
+                  pageindex = val;
+                });
+              },
               height: 400,
               aspectRatio: 16 / 9,
               viewportFraction: 0.6,
-              initialPage:0,
+              initialPage: 0,
               autoPlay: true,
-              autoPlayInterval: Duration(seconds: 3),
+              autoPlayInterval: Duration(seconds: 10),
               autoPlayAnimationDuration: Duration(milliseconds: 800),
               autoPlayCurve: Curves.easeInOut,
               enlargeCenterPage: true,
               scrollDirection: Axis.horizontal,
-            )),
+            ),
+          ),
+          CarouselIndicator(
+            color: Colors.grey,
+            activeColor: Colors.white,
+            count: items.length,
+            index: pageindex,
+          ),
+        ],
       ),
     );
   }
